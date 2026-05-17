@@ -33,7 +33,9 @@
     </aside>
 
     <section id="workspace" class="workspace">
-        <div th:if="${document != null}" th:replace="~{fragments :: documentWorkspace}"></div>
+        <th:block th:if="${document != null}">
+            <div th:replace="~{fragments :: documentWorkspace}"></div>
+        </th:block>
         <div th:if="${document == null}" class="empty-state">
             <p class="eyebrow">Ready when you are</p>
             <h2>Upload a PDF to start asking grounded questions.</h2>
