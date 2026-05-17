@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section id="document-list" class="document-list" th:fragment="documentList">
+    <div id="flash" class="flash" aria-live="polite"></div>
+    <h2>Documents</h2>
+    <p th:if="${#lists.isEmpty(documents)}" class="muted">No PDFs uploaded yet.</p>
+    <a th:each="doc : ${documents}"
+       class="document-row"
+       th:href="@{/documents/{id}/page(id=${doc.id})}"
+       th:attr="hx-get=@{/documents/{id}(id=${doc.id})}"
+       hx-target="#workspace"
+       hx-swap="innerHTML">
+        <span class="document-title" th:text="${doc.originalFilename}">file.pdf</span>
+        <span class="document-meta">
+            <span th:text="${doc.pageCount + ' pages'}">0 pages</span>
+            <span class="status" th:classappend="${doc.status().name().toLowerCase()}" th:text="${doc.status()}">READY</span>
+        </span>
+    </a>
+</section>
+
+<section class="workspace-inner" th:fragment="documentWorkspace">
+    <header class="document-header">
+        <div>
+            <p class="eyebrow">Selected PDF</p>
+            <h2 th:text="${document.originalFilename}">Document</h2>
+        </div>
+        <div class="stats">
+            <span th:text="${document.pageCount + ' pages'}">0 pages</span>
+            <span th:text="${chunkCount + ' chunks'}">0 chunks</span>
+            <span class="status" th:classappend="${document.status().name().toLowerCase()}" th:text="${document.status()}">READY</span>
+        </div>
+    </header>
+
+    <div th:if="${document.status().name() == 'FAILED'}" class="error-panel" th:text="${document.failureReason}">
+        Processing failed.
+    </div>
+
+    <section class="chat-surface">
+        <div id="chat-history" th:replace="~{fragments :: chatHistory}"></div>
+
+        <form class="question-form"
+              th:if="${document.status().name() == 'READY'}"
+              th:attr="hx-post=@{/documents/{id}/questions(id=${document.id})}"
+              hx-target="#chat-history"
+              hx-swap="outerHTML">
+            <input name="question" type="text" placeholder="Ask about this PDF..." autocomplete="off" required>
+            <button type="submit">Send</button>
+        </form>
+        <p th:if="${document.status().name() != 'READY'}" class="muted">This document is not ready for chat.</p>
+    </section>
+</section>
+
+<div id="chat-history" class="chat-history" th:fragment="chatHistory">
+    <div th:if="${#lists.isEmpty(messages)}" class="empty-chat">
+        <h3>Ask your first question</h3>
+        <p>Answers stay grounded in retrieved PDF chunks and cite source pages.</p>
+    </div>
+    <article th:each="message : ${messages}" class="chat-turn">
+        <div class="question" th:text="${message.question}">Question?</div>
+        <div class="answer" th:text="${message.answer}">Answer.</div>
+        <div th:if="${!#lists.isEmpty(message.citations)}" class="citations">
+            <span th:each="citation : ${message.citations}" th:text="${'Page ' + citation.pageNumber()}">Page 1</span>
+        </div>
+        <div th:if="${message.notAnswerable}" class="not-answerable">Not enough context found in this PDF.</div>
+    </article>
+</div>
+
+<div id="flash" class="flash error" th:fragment="errorBanner" th:text="${message}">
+    Something went wrong.
+</div>
+</body>
+</html>

@@ -1,0 +1,317 @@
+:root {
+    color-scheme: light;
+    --bg: #f5f7fb;
+    --panel: #ffffff;
+    --panel-soft: #f9fafc;
+    --text: #172033;
+    --muted: #667085;
+    --line: #d9dee8;
+    --accent: #2563eb;
+    --accent-strong: #1d4ed8;
+    --danger: #b42318;
+    --ready: #087443;
+    --processing: #b54708;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.app-shell {
+    display: grid;
+    grid-template-columns: 340px minmax(0, 1fr);
+    min-height: 100vh;
+}
+
+.sidebar {
+    border-right: 1px solid var(--line);
+    background: var(--panel);
+    padding: 24px;
+}
+
+.brand {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.brand-mark {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    font-weight: 800;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+}
+
+.brand h1 {
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.brand p, .hint, .muted, .document-meta {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.upload-box {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px dashed #b8c4d8;
+    border-radius: 8px;
+    background: var(--panel-soft);
+}
+
+.upload-box label, .document-list h2 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    color: #344054;
+}
+
+input[type="file"], input[type="text"] {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    padding: 11px 12px;
+    font: inherit;
+}
+
+button {
+    border: 0;
+    border-radius: 8px;
+    background: var(--accent);
+    color: white;
+    padding: 11px 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent-strong);
+}
+
+.document-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 24px;
+}
+
+.document-row {
+    display: grid;
+    gap: 6px;
+    padding: 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+    background: white;
+}
+
+.document-row:hover {
+    border-color: #9db2d4;
+}
+
+.document-title {
+    overflow: hidden;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.document-meta, .stats, .citations {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.status, .citations span {
+    border-radius: 999px;
+    background: #eef2ff;
+    color: #3538cd;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status.ready {
+    background: #ecfdf3;
+    color: var(--ready);
+}
+
+.status.processing {
+    background: #fffaeb;
+    color: var(--processing);
+}
+
+.status.failed {
+    background: #fef3f2;
+    color: var(--danger);
+}
+
+.workspace {
+    min-width: 0;
+    padding: 28px;
+}
+
+.workspace-inner {
+    display: grid;
+    gap: 20px;
+    height: calc(100vh - 56px);
+}
+
+.document-header {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+}
+
+.document-header h2, .empty-state h2 {
+    margin-top: 4px;
+    font-size: 28px;
+    line-height: 1.15;
+}
+
+.eyebrow {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.empty-state {
+    display: grid;
+    align-content: center;
+    max-width: 640px;
+    min-height: calc(100vh - 56px);
+    gap: 12px;
+}
+
+.empty-state p:last-child {
+    color: var(--muted);
+    font-size: 16px;
+}
+
+.chat-surface {
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    min-height: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--panel);
+}
+
+.chat-history {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+    overflow: auto;
+    padding: 20px;
+}
+
+.empty-chat {
+    display: grid;
+    place-items: start;
+    gap: 8px;
+    padding: 24px;
+    border: 1px dashed var(--line);
+    border-radius: 8px;
+    background: var(--panel-soft);
+}
+
+.empty-chat p {
+    color: var(--muted);
+}
+
+.chat-turn {
+    display: grid;
+    gap: 10px;
+    max-width: 900px;
+}
+
+.question {
+    justify-self: end;
+    max-width: 78%;
+    border-radius: 8px;
+    background: #e8efff;
+    padding: 12px 14px;
+    font-weight: 700;
+}
+
+.answer {
+    max-width: 84%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: white;
+    padding: 14px;
+    line-height: 1.55;
+    white-space: pre-wrap;
+}
+
+.not-answerable, .error-panel, .flash.error {
+    color: var(--danger);
+}
+
+.question-form {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    padding: 14px;
+    border-top: 1px solid var(--line);
+    background: var(--panel-soft);
+}
+
+.flash {
+    min-height: 0;
+}
+
+@media (max-width: 860px) {
+    .app-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    .workspace {
+        padding: 18px;
+    }
+
+    .workspace-inner {
+        height: auto;
+        min-height: 70vh;
+    }
+
+    .document-header {
+        display: grid;
+    }
+
+    .question, .answer {
+        max-width: 100%;
+    }
+}

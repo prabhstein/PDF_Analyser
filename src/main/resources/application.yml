@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: pdf-analyser
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pdf_analyser
+    username: pdf_analyser
+    password: pdf_analyser
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+  thymeleaf:
+    cache: false
+
+app:
+  storage-dir: storage/uploads
+  retrieval:
+    max-results: 5
+    min-similarity: 0.18
+  openai:
+    api-key: ${OPENAI_API_KEY:}
+    base-url: https://api.openai.com/v1
+    embedding-model: text-embedding-3-small
+    chat-model: gpt-5-mini

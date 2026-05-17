@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PDF Analyser</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script th:src="@{/webjars/htmx.org/dist/htmx.min.js}" defer></script>
+</head>
+<body>
+<main class="app-shell">
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-mark">P</div>
+            <div>
+                <h1>PDF Analyser</h1>
+                <p>Grounded document chat</p>
+            </div>
+        </div>
+
+        <form class="upload-box"
+              hx-post="/documents"
+              hx-target="#document-list"
+              hx-swap="outerHTML"
+              enctype="multipart/form-data">
+            <label for="file">Upload PDF</label>
+            <input id="file" name="file" type="file" accept="application/pdf" required>
+            <button type="submit">Analyse</button>
+            <p class="hint">PDF text is extracted, embedded, and stored locally with pgvector.</p>
+        </form>
+
+        <section id="document-list" th:replace="~{fragments :: documentList}"></section>
+    </aside>
+
+    <section id="workspace" class="workspace">
+        <div th:if="${document != null}" th:replace="~{fragments :: documentWorkspace}"></div>
+        <div th:if="${document == null}" class="empty-state">
+            <p class="eyebrow">Ready when you are</p>
+            <h2>Upload a PDF to start asking grounded questions.</h2>
+            <p>Your answers will cite the source pages used from the document.</p>
+        </div>
+    </section>
+</main>
+</body>
+</html>

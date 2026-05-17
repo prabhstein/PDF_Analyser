@@ -1,0 +1,20 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: pdf-analyser-db
+    environment:
+      POSTGRES_DB: pdf_analyser
+      POSTGRES_USER: pdf_analyser
+      POSTGRES_PASSWORD: pdf_analyser
+    ports:
+      - "5432:5432"
+    volumes:
+      - pdf_analyser_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pdf_analyser -d pdf_analyser"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pdf_analyser_data:
